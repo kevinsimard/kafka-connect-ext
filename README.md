@@ -2,6 +2,8 @@
 
 ## Code Structure
 
+    ├── bin
+    │   └── kafka-connect-hdfs-ext-1.0.0.jar
     ├── src
     │   └── main
     │       └── java
