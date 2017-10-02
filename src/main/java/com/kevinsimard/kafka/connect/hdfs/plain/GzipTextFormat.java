@@ -1,4 +1,4 @@
-package com.kevinsimard.kafka.connect.hdfs.ext;
+package com.kevinsimard.kafka.connect.hdfs.plain;
 
 import io.confluent.connect.avro.AvroData;
 import io.confluent.connect.hdfs.Format;
@@ -24,16 +24,16 @@ public class GzipTextFormat implements Format {
         return new RecordWriterProvider() {
             @Override
             public RecordWriter<SinkRecord> getRecordWriter(
-                    Configuration conf, String file, SinkRecord record, AvroData avroData) throws IOException {
+                Configuration conf, String fileName, SinkRecord record, AvroData avroData) throws IOException {
 
                 return new RecordWriter<SinkRecord>() {
-                    private final Path path = new Path(file);
+                    private final Path path = new Path(fileName);
                     private final FSDataOutputStream hadoop = path.getFileSystem(conf).create(path);
                     private final OutputStream out = new GZIPOutputStream(hadoop);
 
                     @Override
-                    public void write(SinkRecord sinkRecord) throws IOException {
-                        out.write(((String) sinkRecord.value()).getBytes());
+                    public void write(SinkRecord record) throws IOException {
+                        out.write(((String) record.value()).getBytes());
                         out.write("\n".getBytes());
                     }
 

@@ -1,9 +1,7 @@
-# Kafka Connect HDFS Extension
+# Kafka Connect Extension
 
 ## Code Structure
 
-    ├── bin
-    │   └── kafka-connect-hdfs-ext-1.0.0.jar
     ├── src
     │   └── main
     │       └── java
@@ -11,8 +9,12 @@
     │               └── kevinsimard
     │                   └── kafka
     │                       └── connect
-    │                           └── hdfs
-    │                               └── ext
+    │                           ├── hdfs
+    │                           │   └── plain
+    │                           │       ├── GzipTextFormat.java
+    │                           │       └── PlainTextFormat.java
+    │                           └── s3
+    │                               └── plain
     │                                   ├── GzipTextFormat.java
     │                                   └── PlainTextFormat.java
     ├── .editorconfig
@@ -26,17 +28,30 @@
 Use `$ mvn package` to compile JAR file and either copy it or create a symlink to Kafka Connect shared directory.
 
 ```bash
-$ cp target/kafka-connect-hdfs-ext-1.0.0.jar <connect_path>/share/java/kafka-connect-hdfs/
-$ ln -s target/kafka-connect-hdfs-ext-1.0.0.jar <connect_path>/share/java/kafka-connect-hdfs/
+$ cp target/kafka-connect-ext-1.1.0.jar <connect_path>/share/java/kafka/
+$ ln -s target/kafka-connect-ext-1.1.0.jar <connect_path>/share/java/kafka/
 ```
 
 ## Usage
 
+### HDFS
+
 Set format class in your HDFS sink properties file to one of the following:
 
 ```
-format.class=com.kevinsimard.kafka.connect.hdfs.ext.GzipTextFormat
-format.class=com.kevinsimard.kafka.connect.hdfs.ext.PlainTextFormat
+format.class=com.kevinsimard.kafka.connect.hdfs.plain.GzipTextFormat
+format.class=com.kevinsimard.kafka.connect.hdfs.plain.PlainTextFormat
 ```
 
 > Note: Use instructions from https://github.com/confluentinc/kafka-connect-hdfs for other required configurations.
+
+### S3
+
+Set format class in your S3 sink properties file to one of the following:
+
+```
+format.class=com.kevinsimard.kafka.connect.s3.plain.GzipTextFormat
+format.class=com.kevinsimard.kafka.connect.s3.plain.PlainTextFormat
+```
+
+> Note: Use instructions from https://github.com/confluentinc/kafka-connect-storage-cloud for other required configurations.
