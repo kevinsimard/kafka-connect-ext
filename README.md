@@ -55,3 +55,7 @@ format.class=com.kevinsimard.kafka.connect.s3.plain.PlainTextFormat
 ```
 
 > Note: Use instructions from https://github.com/confluentinc/kafka-connect-storage-cloud for other required configurations.
+
+## License
+
+This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
